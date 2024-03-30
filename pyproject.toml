@@ -63,28 +63,14 @@ serve = "mkdocs serve --dev-addr localhost:8000 -vv"
 [tool.hatch.envs.dev]
 dependencies = [
   "pre-commit",
-  "ruff",
-  "black",
   "commitizen",
   "pip-audit",
 ]
-post-install-commands = [
-  "pre-commit install --hook-type commit-msg --hook-type pre-push"
-]
 [tool.hatch.envs.dev.scripts]
+install-pre-commit-hook = "pre-commit install --hook-type commit-msg --hook-type pre-push"
 audit = "pip-audit"
-lint = "ruff check src/"
-format = "black src/"
-commit = "cz commit"
+commit = ["install-pre-commit-hook","cz commit"]
 
-
-[tool.ruff]
-line-length = 99
-target-version = "py310"
-
-[tool.black]
-line-length = 99
-target-version = ['py310']
 
 # TODO: find a way testing mkdocs plugins
 # [[tool.hatch.envs.test.matrix]]
