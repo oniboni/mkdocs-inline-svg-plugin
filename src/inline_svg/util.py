@@ -1,14 +1,15 @@
-from typing import Optional
-from bs4 import BeautifulSoup
+import os
+import re
 from functools import partial
+from typing import Optional
+
+import requests
+from bs4 import BeautifulSoup
 from mkdocs.plugins import log
 from mkdocs.structure.files import File, Files
-import requests
-import re
-import os
+
 from inline_svg import __version__
 from inline_svg.config import Config
-
 
 PACKAGE_NAME = __package__.upper()
 

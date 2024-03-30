@@ -1,17 +1,18 @@
-from mkdocs.plugins import BasePlugin
-from mkdocs.config.config_options import Type
+import re
+from tempfile import TemporaryDirectory
+
 from bs4 import BeautifulSoup
+from mkdocs.config.config_options import Type
+from mkdocs.plugins import BasePlugin
 
 from inline_svg.config import Config
 from inline_svg.util import (
-    info,
     debug,
     get_svg_data,
     get_svg_tag,
     include_assets,
+    info,
 )
-import re
-from tempfile import TemporaryDirectory
 
 WILDCARD = "*"
 
