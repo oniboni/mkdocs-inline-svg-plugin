@@ -4,9 +4,10 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mkdocs-inline-svg-plugin"
+dynamic = ["version"]
 description = 'MkDocs plugin for inlining svg-href img tags'
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.8"
 license = "MIT"
 keywords = ["MkDocs"]
 authors = [
@@ -15,9 +16,11 @@ authors = [
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
@@ -26,7 +29,6 @@ dependencies = [
 	"requests ~= 2.31.0",
 	"beautifulsoup4 ~= 4.12.0",
 ]
-dynamic = ["version"]
 
 [project.urls]
 Documentation = "https://github.com/oniboni/mkdocs-inline-svg-plugin#readme"
@@ -44,12 +46,22 @@ packages = ["src/inline_svg"]
 
 [tool.hatch.envs.default]
 dependencies = [
+  "coverage[toml]>=6.5",
   "pytest",
-  "pytest-cov",
+  "pip-audit",
 ]
 [tool.hatch.envs.default.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=inline_svg --cov=tests {args}"
-no-cov = "cov --no-cov {args}"
+test = "pytest {args:tests}"
+test-cov = "coverage run -m pytest {args:tests}"
+cov-report = [
+  "- coverage combine",
+  "coverage report",
+]
+cov = [
+  "test-cov",
+  "cov-report",
+]
+audit = "pip-audit"
 
 [tool.hatch.envs.docs]
 dependencies = [
@@ -64,21 +76,34 @@ serve = "mkdocs serve --dev-addr localhost:8000 -vv"
 dependencies = [
   "pre-commit",
   "commitizen",
-  "pip-audit",
 ]
 [tool.hatch.envs.dev.scripts]
 install-pre-commit-hooks = "pre-commit install --hook-type commit-msg --hook-type pre-push"
-audit = "pip-audit"
 commit = ["install-pre-commit-hooks","cz commit"]
 
 
-# TODO: find a way testing mkdocs plugins
-# [[tool.hatch.envs.test.matrix]]
-# python = ["39", "310", "311"]
+# TODO: find a way testing mkdocs plugin
+# [[tool.hatch.envs.all.matrix]]
+# python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+# [tool.hatch.envs.types]
+# dependencies = [
+#   "mypy>=1.0.0",
+# ]
+# [tool.hatch.envs.types.scripts]
+# check = "mypy --install-types --non-interactive {args:src/inline_svg tests}"
 
 # [tool.coverage.run]
+# source_pkgs = ["inline_svg", "tests"]
 # branch = true
 # parallel = true
+# omit = [
+#   "src/inline_svg/__about__.py",
+# ]
+
+# [tool.coverage.paths]
+# inline_svg = ["src/inline_svg", "*/inline_svg/src/inline_svg"]
+# tests = ["tests", "*/inline_svg/tests"]
 
 # [tool.coverage.report]
 # exclude_lines = [
