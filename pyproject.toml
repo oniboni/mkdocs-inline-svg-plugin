@@ -22,9 +22,9 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-	"mkdocs >= 1.4.2",
-	"requests >= 2.31.0",
-	"beautifulsoup4 >= 4.12.0",
+	"mkdocs ~= 1.4.2",
+	"requests ~= 2.31.0",
+	"beautifulsoup4 ~= 4.12.0",
 ]
 dynamic = ["version"]
 
@@ -67,9 +67,9 @@ dependencies = [
   "pip-audit",
 ]
 [tool.hatch.envs.dev.scripts]
-install-pre-commit-hook = "pre-commit install --hook-type commit-msg --hook-type pre-push"
+install-pre-commit-hooks = "pre-commit install --hook-type commit-msg --hook-type pre-push"
 audit = "pip-audit"
-commit = ["install-pre-commit-hook","cz commit"]
+commit = ["install-pre-commit-hooks","cz commit"]
 
 
 # TODO: find a way testing mkdocs plugins
