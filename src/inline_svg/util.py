@@ -94,8 +94,8 @@ def get_svg_data(url: str, files: Files, config: Config) -> str:
             svg_data = file.read()
         files.remove(static_file)
         return svg_data
-    else:
-        return requests.get(url, headers={"User-Agent": user_agent_string})
+
+    return requests.get(url, headers={"User-Agent": user_agent_string})
 
 
 def include_assets(svg_soup, files: Files, config: Config):
