@@ -42,7 +42,7 @@ class InlineSvgPlugin(BasePlugin):
         soup = BeautifulSoup(html, "html.parser")
 
         for img_tag in soup.find_all("img", {"src": re.compile(r"\.svg$")}):
-            if self._config.alt_name != WILDCARD and img_tag["alt"] != self._config.alt_name:
+            if self._config.alt_name not in {WILDCARD, img_tag["alt"]}:
                 continue
             debug(f'inlining {img_tag} -> {img_tag["src"]}')
 
