@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import os
 import re
 from functools import partial
-from typing import Optional
+from typing import TYPE_CHECKING
 
 import requests
 from bs4 import BeautifulSoup
@@ -9,7 +11,9 @@ from mkdocs.plugins import log
 from mkdocs.structure.files import File, Files
 
 from inline_svg import __version__
-from inline_svg.config import Config
+
+if TYPE_CHECKING:
+    from inline_svg.config import Config
 
 PACKAGE_NAME = __package__.upper()
 
@@ -78,7 +82,7 @@ def _patch_style(svg_soup):
             element.attrs["fill"] = "var(--md-default-fg-color)"
 
 
-def _get_local_file_from_url(url: str, files: Files, config: Config) -> Optional[File]:
+def _get_local_file_from_url(url: str, files: Files, config: Config) -> File | None:
     debug(f"url.removeprefix(config.site_url: {url}, {config.site_url}")
     return files.get_file_from_path(url.removeprefix(config.site_url))
 
