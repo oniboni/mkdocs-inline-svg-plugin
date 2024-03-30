@@ -19,8 +19,9 @@ plugins:
   - kroki:
       # ServerURL: http://127.0.0.1:9000
       FencePrefix: ''
-      HttpMethod: 'POST'
-      DownloadImages: true
+      # HttpMethod: 'POST'
+      # DownloadImages: false
   - inline-svg:
-      AltName: Kroki
-      # PatchStyle: true
+      alt_name: Kroki
+      include_assets: true
+      # patch_style: true
