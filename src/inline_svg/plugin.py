@@ -38,7 +38,7 @@ class InlineSvgPlugin(BasePlugin):
         )
         return config
 
-    def on_page_content(self, html, page, config, files, **_kwargs):
+    def on_page_content(self, html, _page, _config, files, **_kwargs):
         soup = BeautifulSoup(html, "html.parser")
 
         for img_tag in soup.find_all("img", {"src": re.compile(r"\.svg$")}):
