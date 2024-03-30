@@ -23,6 +23,7 @@ error = partial(log.error, f"[{PACKAGE_NAME}] %s")
 
 tag_blocklist = "script"
 user_agent_string = f"{__package__}/{__version__}"
+REQUESTS_TIMEOUT = 10
 
 
 def _sanitize_svg(svg_soup):
@@ -66,13 +67,9 @@ color_mappings = {
 def _patch_style(svg_soup):
     for element in svg_soup.findAll(["polygon", "ellipse", "rect", "line", "path", "text", "g"]):
         if "fill" in element.attrs:
-            element.attrs["fill"] = (
-                color_mappings.get(element.attrs["fill"]) or element.attrs["fill"]
-            )
+            element.attrs["fill"] = color_mappings.get(element.attrs["fill"]) or element.attrs["fill"]
         if "stroke" in element.attrs:
-            element.attrs["stroke"] = (
-                color_mappings.get(element.attrs["stroke"]) or element.attrs["stroke"]
-            )
+            element.attrs["stroke"] = color_mappings.get(element.attrs["stroke"]) or element.attrs["stroke"]
 
         if "style" in element.attrs:
             for color, replacement in color_mappings.items():
@@ -95,7 +92,7 @@ def get_svg_data(url: str, files: Files, config: Config) -> str:
         files.remove(static_file)
         return svg_data
 
-    return requests.get(url, headers={"User-Agent": user_agent_string})
+    return requests.get(url, headers={"User-Agent": user_agent_string}, timeout=REQUESTS_TIMEOUT)
 
 
 def include_assets(svg_soup, files: Files, config: Config):
@@ -115,7 +112,7 @@ def include_assets(svg_soup, files: Files, config: Config):
         if os.path.exists(file_src):
             return _css_url(file_path)
 
-        response = requests.get(url, headers={"User-Agent": user_agent_string})
+        response = requests.get(url, headers={"User-Agent": user_agent_string}, timeout=REQUESTS_TIMEOUT)
         if not response.ok:
             error(f"Could not download [{url}: {response.status_code} {response.reason}]")
             return _css_url(url)
@@ -158,9 +155,7 @@ def get_svg_tag(svg_data, config: Config):
             error("SVG does not contain viewbox or height and width.")
 
     # remove unnecessary attrs
-    svg_soup.svg.attrs = {
-        k: v for k, v in svg_soup.svg.attrs.items() if k in ["version", "viewbox", "style"]
-    }
+    svg_soup.svg.attrs = {k: v for k, v in svg_soup.svg.attrs.items() if k in ["version", "viewbox", "style"]}
 
     svg_soup.svg.attrs["id"] = __package__
     _sanitize_svg(svg_soup)
