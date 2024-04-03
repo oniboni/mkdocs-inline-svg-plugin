@@ -1,0 +1,36 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+
+name: Publish to test PyPI
+
+on:
+  workflow_dispatch:
+  push:
+
+env:
+  PYTHONUNBUFFERED: "1"
+  FORCE_COLOR: "1"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install Hatch
+      run: pip install --upgrade hatch
+
+    - name: Build package
+      run: hatch build
+
+    - name: Publish package
+      run: hatch publish --repo test --user __token__ --auth ${{ secrets.TEST_PYPI_API_TOKEN }}
