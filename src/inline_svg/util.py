@@ -14,7 +14,7 @@ from mkdocs.structure.files import (
     Files as MkDocsFiles,
 )
 
-from inline_svg import __version__
+from inline_svg.__version__ import __version__
 
 if TYPE_CHECKING:
     from inline_svg.config import InlineSvgConfig
