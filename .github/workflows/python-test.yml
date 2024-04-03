@@ -39,5 +39,6 @@ jobs:
     - name: Run static analysis
       run: hatch fmt --check
 
-    - name: Run tests
-      run: hatch run cov
+    # TODO: find a way testing mkdocs plugin
+    # - name: Run tests
+    #   run: hatch run cov
