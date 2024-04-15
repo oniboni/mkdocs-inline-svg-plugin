@@ -34,17 +34,17 @@ plugins:
       HttpMethod: 'POST'
       DownloadImages: true
   - inline-svg:
-      AltName: Kroki
+      alt_name: Kroki
 ```
 
 ### Configuration
 
 | Config value | What for |
 |---|---|
-| `AltName` | default: `*`, that does not check the `img` `alt` property |
-| `IncludeAssets` | default: `False`, looks for `url(..)`, downloads the contents to `AssetDir` and replaces the url |
-| `AssetDir` | default: `assets/` |
-| `PatchStyle` | default: `False`, this feature is **EXPERIMENTAL** and not yet finished, needs an additional CSS |
+| `alt_name` | default: `*`, that does not check the `img` `alt` property |
+| `include_assets` | default: `False`, looks for `url(..)`, downloads the contents to `asset_dir` and replaces the url |
+| `asset_dir` | default: `assets/` |
+| `patch_style` | default: `False`, this feature is **EXPERIMENTAL** and not yet finished, needs an additional CSS |
 
 ## Test
 
