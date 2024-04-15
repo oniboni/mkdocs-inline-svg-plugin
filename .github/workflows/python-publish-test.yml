@@ -35,5 +35,8 @@ jobs:
     - name: Build package
       run: hatch build
 
+    - name: Bump temp dev release
+      run: hatch run dev:cz bump --devrelease $(date +%s) --files-only
+
     - name: Publish package
       run: hatch publish
