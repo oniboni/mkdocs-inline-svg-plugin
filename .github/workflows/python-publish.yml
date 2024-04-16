@@ -44,7 +44,7 @@ jobs:
           run: hatch build
 
         - name: Gather changes
-          run: sed -n '/^## '"${{ env.GITHUB_REF_NAME }}"'/,/^## .*/p' CHANGELOG.md > RELEASE_NOTES.md
+          run: sed -n '/^## '"${{ github.ref_name }}"'/,/^## .*/{/^## .*/d;p;}' CHANGELOG.md > RELEASE_NOTES.md
 
         - name: Create Release
           uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564
