@@ -81,7 +81,9 @@ def _patch_style(svg_soup):
 
 
 def _get_local_file_from_url(url: str, files: MkDocsFiles, config: InlineSvgConfig) -> MkDocsFile | None:
-    return files.get_file_from_path(url.removeprefix(config.site_url))
+    if config.site_url is not None:
+        url = url.removeprefix(config.site_url)
+    return files.get_file_from_path(url)
 
 
 def get_svg_data(url: str, files: MkDocsFiles, config: InlineSvgConfig) -> str | None:
