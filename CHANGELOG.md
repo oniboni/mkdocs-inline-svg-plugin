@@ -1,3 +1,9 @@
+## v0.1.4 (2024-05-07)
+
+### Fix
+
+- issue with site_url is not defined (#4)
+
 ## v0.1.3 (2024-04-15)
 
 ### Fixed
