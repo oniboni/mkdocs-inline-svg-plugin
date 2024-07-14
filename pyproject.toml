@@ -116,3 +116,5 @@ version_files = [
   "pyproject.toml:version",
   "src/inline_svg/__init__.py",
 ]
+update_changelog_on_bump=true
+changelog_incremental=true
