@@ -28,29 +28,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-        - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
-                # actions/checkout@v4
-        - name: Set up Python
-          uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d
-                # actions/setup-python@v5
-          with:
-            python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
+        with:
+          python-version: '3.x'
 
-        - name: Install Hatch
-          run: pip install --upgrade hatch
+      - name: Install Hatch
+        run: pip install --upgrade hatch
 
-        - name: Build package
-          run: hatch build
+      - name: Build package
+        run: hatch build
 
-        - name: Gather changes
-          run: sed -n '/^## '"${{ github.ref_name }}"'/,/^## .*/{/^## .*/d;p;}' CHANGELOG.md > RELEASE_NOTES.md
+      - name: Gather changes
+        run: sed -n '/^## '"${{ github.ref_name }}"'/,/^## .*/{/^## .*/d;p;}' CHANGELOG.md > RELEASE_NOTES.md
 
-        - name: Create Release
-          uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191
-                # softprops/action-gh-release@v2
-          with:
-            body_path: RELEASE_NOTES.md
+      - name: Create Release
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2.0.8
+        with:
+          body_path: RELEASE_NOTES.md
 
-        - name: Publish package
-          run: hatch publish
+      - name: Publish package
+        run: hatch publish

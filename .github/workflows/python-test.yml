@@ -27,18 +27,20 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-    - name: Install Hatch
-      run: pip install --upgrade hatch
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Run static analysis
-      run: hatch fmt --check
+      - name: Install Hatch
+        run: pip install --upgrade hatch
 
-    # TODO: find a way testing mkdocs plugin
-    # - name: Run tests
-    #   run: hatch test
+      - name: Run static analysis
+        run: hatch fmt --check
+
+      # TODO: find a way testing mkdocs plugin
+      # - name: Run tests
+      #   run: hatch test
