@@ -5,9 +5,9 @@ name: test
 
 on:
   push:
-    # branches: [ "main" ]
+    branches: [ "main" ]
   pull_request:
-    # branches: [ "main" ]
+    branches: [ "main" ]
 
 concurrency:
   group: test-${{ github.head_ref }}
@@ -41,4 +41,4 @@ jobs:
 
     # TODO: find a way testing mkdocs plugin
     # - name: Run tests
-    #   run: hatch run cov
+    #   run: hatch test
